@@ -10,10 +10,10 @@ We recursively sort #a0# and #a1#, and then we merge (the now sorted)
 #a0# and #a1# to get our fully sorted array #a#:
 \javaimport{ods/Algorithms.mergeSort(a,c)}
 Compared to sorting, merging the two sorted arrays #a0# and #a1# fairly
-easy.  We add elements to #a# one at a time.  If #a0# is empty we add
-the next element from #a1#.  If #a1# is empty we add the next element
-from #a0#.  Otherwise, we take the minimum of the next element in #a0#
-and the next element in #a1# and add it to #a#:
+easy.  We add elements to #a# one at a time.  If #a0# or #a1# is empty
+we add the next element from the other (non-empty) array. Otherwise,
+we take the minimum of the next element in #a0# and the next element in
+#a1# and add it to #a#:
 \javaimport{ods/Algorithms.merge(a0,a1,a,c)}
 Notice that the #merge(a0,a1,a,c)# algorithm performs at most $#n#-1$
 comparisons before running out of elements in one of #a0# or #a1#.
@@ -25,7 +25,8 @@ The following theorem shows that #mergeSort(a,c)# is a very efficient algorithm:
 \end{thm}
 
 \begin{proof}
-The proof is by induction on $#n#$.  The base case $#n#=1$ is trivial.
+The proof is by induction on $#n#$.  The base case, in which $#n#=1$,
+is trivial.
 
 Merging two sorted lists of total length $#n#$ requires at most $#n#-1$
 comparisons. If $#n#$ is even, then we apply the inductive hypothesis to
@@ -67,9 +68,37 @@ Multiplying both sides of this inequality by $\log e$ yields
 $\log (x+1/2) < \log x + (\log e)/2x$.
 \end{proof}
 
-
-
 \section{Quicksort}
+
+The \emph{quicksort} algorithm is another classic divide and conquer
+algorithm.  Unlike mergesort, which does merging after solving the two
+subproblems, quicksort does all its work upfront.
+
+The algorithm is simple to describe:  Pick a random element #x# from #a#;
+partition #a# into the set of elements less than #x#, the set of
+elements equal to #x#, and the set of elements greater than #x#; and,
+finally, recursively sort the first and third sets in this partition.
+\javaimport{ods/Algorithms.quickSort(a,c).quickSort(a,i,n,c)}
+All of this is done in-place, so that instead of making copies of
+subarrays being sorted, the #quickSort(a,i,n,c)# method only sorts the
+subarray $#a[i]#,\ldots,#a[i+n-1]#$.  Initially, this method is called
+as #quickSort(a,0,a.length,c)#.
+
+At the heart of the quicksort algorithm is the in-place partitioning done that, without any extra space swaps elements in #a# and computes indices #p# and #q# so that
+\[
+   #a[i]# \begin{cases} 
+         {}< #x# & \text{if $0\le #i#\le #p#$} \\
+         {}= #x# & \text{if $#p#< #i# < #q#$} \\
+         {}> #x# & \text{if $#q#\le #i# \le #n#-1$}
+     \end{cases}
+\]
+This partitioning, that is done by the #while# loop in the code works
+by iteratively increasing #p# and decreasing #q# while maintaining the
+first and last of these conditions.
+
+
+
+
 \section{Heapsort}
 
 
