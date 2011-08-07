@@ -92,9 +92,55 @@ At the heart of the quicksort algorithm is the in-place partitioning done that, 
          {}> #x# & \text{if $#q#\le #i# \le #n#-1$}
      \end{cases}
 \]
-This partitioning, that is done by the #while# loop in the code works
+This partitioning, which is done by the #while# loop in the code, works
 by iteratively increasing #p# and decreasing #q# while maintaining the
-first and last of these conditions.
+first and last of these conditions.  At each step, element at position
+#j# is either moved to the front, left where it is, added to the back.
+In the first two cases, #j# is incremented, while in the last case, #j#
+is not incremented since the new element at position #j# has not been
+processed yet.
+
+The quicksort algorithms is very closely related to the random binary
+search trees from \secref{rbst}.  In fact, if the input to quicksort
+consists of #n# distinct elements, then the quicksort recursion tree is
+a random binary search tree.
+
+To see this, recall that when constructing a random binary search
+tree the first thing we do is pick a random element #x# and make it
+the root of the tree.  After this, every element will eventually be
+compared to #x#, with smaller elements going into the left subtree and
+larger elements going into the right subtree.  In quicksort, we select
+a random element #x# and immediately compare everything to #x#, putting
+the smaller elements at the beginning of the array and larger elements
+at the end of the array.  Quicksort then recursively sorts the beginning
+of the array and the end of the array, while the random binary search
+tree recursively inserts smaller elements in the left subtree of the
+root and larger elements in the right subtree of the root.
+
+The above correspondence between random binary search trees and quicksort
+means that we can translate \lemref{rbs} to a statement about quicksort:
+
+\begin{lem}
+  When quicksort is called to sort an array containing the integers
+  $1,\ldots,n$, the expected number of times element #i# is compared to
+  a pivot element is at most $H_{#i#} + H_{#n#-#i#}$.
+\end{lem}
+
+A little summing of harmonic numbers gives us the following theorem
+about the running-time of quicksort:
+
+\begin{thm}
+  When quicksort is called to sort an array containing #n# distinct elements,
+  the expected number of comparisons performed is $2\ln n - O(n)$.
+\end{thm}
+
+\begin{proof}
+
+\end{proof}
+
+
+
+
 
 
 
